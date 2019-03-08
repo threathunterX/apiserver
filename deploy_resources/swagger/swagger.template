@@ -1,0 +1,25 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is the Swagger page for Asset management.",
+        "version": "1.0.0",
+        "title": "Swagger Asset Management"
+    },
+    "host": "127.0.0.1:8080",
+    "tags": [
+        {
+            "name": "asset",
+            "description": "API for Asset management"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+
+    ###swagger_content###
+    ,
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    }
+}

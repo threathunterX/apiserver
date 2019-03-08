@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threathunter.web.manager.mysql.mapper.SlotNoticeMapper">
+    <resultMap id="slotNotice" type="com.threathunter.web.manager.mysql.domain.SlotNotice">
+        <result property="id" column="id"></result>
+        <result property="timestamp" column="timestamp"></result>
+        <result property="key" column="key"></result>
+        <result property="strategy_name" column="strategy_name"></result>
+        <result property="scene_name" column="scene_name"></result>
+        <result property="checkpoints" column="checkpoints"></result>
+        <result property="check_type" column="check_type"></result>
+        <result property="decision" column="decision"></result>
+        <result property="risk_score" column="risk_score"></result>
+        <result property="expire" column="expire"></result>
+        <result property="remark" column="remark"></result>
+        <result property="last_modified" column="last_modified"></result>
+        <result property="variable_values" column="variable_values" javaType="java.util.Map" jdbcType="BLOB"
+                typeHandler="com.threathunter.web.manager.mysql.handler.MapTypeHandler"></result>
+        <result property="geo_province" column="geo_province"></result>
+        <result property="geo_city" column="geo_city"></result>
+        <result property="test" column="test"></result>
+        <result property="tip" column="tip"></result>
+        <result property="uri_stem" column="uri_stem"></result>
+        <result property="trigger_event" column="trigger_event" javaType="java.util.Map" jdbcType="BLOB"
+                typeHandler="com.threathunter.web.manager.mysql.handler.MapTypeHandler"></result>
+        <result property="count" column="count"></result>
+    </resultMap>
+    <resultMap id="staticCount" type="com.threathunter.web.manager.mysql.util.MappingHelper">
+        <id property="key" column="time_hour"/>
+        <result property="value" column="total"/>
+    </resultMap>
+
+    <sql id="selectaggr">
+         `id`,`timestamp`,`key`,`strategy_name`,`scene_name`,`checkpoints`,`check_type`,`decision`,`risk_score`,`expire`,`remark`,`variable_values`,`geo_province`,`geo_city`,`test`,`tip`,`uri_stem`, count(`key`) as `count`
+    </sql>
+
+    <sql id="selectNonaggr">
+        `id`,`timestamp`,`key`,`strategy_name`,`scene_name`,`checkpoints`,`check_type`,`decision`,`risk_score`,`expire`,`remark`,`variable_values`,`geo_province`,`geo_city`,`test`,`tip`,`uri_stem`
+    </sql>
+    <sql id="fromWhere">
+        from nebula_data.notice
+        <where>
+            1=1
+            <if test="filterExpire">
+                and expire > unix_timestamp(now())*1000
+            </if>
+            <if test="decisions != null and decisions.size()>0">
+                and decision in
+                <foreach item="item" index="index" collection="decisions"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="strategies != null and strategies.size()>0">
+                and strategy_name in
+                <foreach item="item" index="index" collection="strategies"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="checkTypes != null and checkTypes.size()>0">
+                and check_type in
+                <foreach item="item" index="index" collection="checkTypes"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="sceneTypes != null and sceneTypes.size()>0">
+                and scene_name in
+                <foreach item="item" index="index" collection="sceneTypes"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="fromTime >0 ">
+                and timestamp >= #{fromTime}
+            </if>
+            <if test="endTime >0 ">
+                <![CDATA[
+                and timestamp <= #{endTime}
+            ]]>
+            </if>
+            <if test="key != null ">
+                <bind name="pattern" value="'%' + key + '%'"/>
+                AND `key` LIKE #{pattern}
+            </if>
+            <if test="test != null ">
+                AND `test` = #{test}
+            </if>
+        </where>
+    </sql>
+    <insert id="insert" parameterType="com.threathunter.web.manager.mysql.domain.SlotNotice" useGeneratedKeys="true"
+            keyProperty="id" keyColumn="id">
+        INSERT INTO nebula_data.notice  (`timestamp`,`key`,`strategy_name`,`scene_name`,`checkpoints`,`check_type`,`decision`,`risk_score`,`expire`,`remark`,`last_modified`,`variable_values`,`geo_province`,`geo_city`,`test`,`tip`,`uri_stem`,`trigger_event`)
+        VALUES (#{timestamp},#{key},#{strategy_name},#{scene_name},#{checkpoints},#{check_type},#{decision},#{risk_score},#{expire},#{remark},#{last_modified},#{variable_values},#{geo_province},#{geo_city},#{test},#{tip},#{uri_stem},#{trigger_event});
+    </insert>
+    <insert id="insertList" parameterType="java.util.List">
+        INSERT INTO nebula_data.notice
+        (`timestamp`,`key`,`strategy_name`,`scene_name`,`checkpoints`,`check_type`,`decision`,`risk_score`,`expire`,`remark`,`last_modified`,`variable_values`,`geo_province`,`geo_city`,`test`,`tip`,`uri_stem`,`trigger_event`)
+        VALUES
+        <foreach collection="notices" item="item" separator=",">
+            (
+            #{item.timestamp},#{item.key},#{item.strategy_name},#{item.scene_name},#{item.checkpoints},#{item.check_type},#{item.decision},#{item.risk_score},#{item.expire},#{item.remark},#{item.last_modified},#{item.variable_values},#{item.geo_province},#{item.geo_city},#{item.test},#{item.tip},#{item.uri_stem},#{item.trigger_event}
+            )
+        </foreach>
+    </insert>
+
+
+    <update id="update">
+        update nebula_data.notice set
+          `key` = #{key},
+          `strategy_name` = #{strategy_name},
+          `scene_name` = #{scene_name},
+          `checkpoints` = #{checkpoints},
+          `check_type` = #{check_type},
+          `decision` = #{decision},
+          `risk_score` = #{risk_score},
+          `expire` = #{expire},
+          `remark` = #{remark},
+          `last_modified` = #{last_modified},
+          `variable_values` = #{variable_values},
+          `geo_province` = #{geo_province},
+          `geo_city` = #{geo_city},
+          `test` = #{test},
+          `tip` = #{tip},
+          `uri_stem` = #{uri_stem},
+          `trigger_event` = #{trigger_event}
+        where id = #{id}
+    </update>
+    <delete id="delete">
+        delete from nebula_data.notice
+        where id=#{id}
+    </delete>
+    <delete id="deleteByKeyAndTime">
+        <![CDATA[
+
+        delete from nebula_data.notice
+        where `key`=#{key} and `timestamp`>=#{fromtime} and `timestamp`<=#{endtime}
+
+        ]]>
+    </delete>
+    <select id="getAll" resultMap="slotNotice">
+        select * from nebula_data.notice
+    </select>
+    <select id="getById" resultMap="slotNotice">
+         select * from nebula_data.notice  where id=#{id}
+    </select>
+    <select id="count" resultType="java.lang.Integer">
+        select count(1) from nebula_data.notice
+    </select>
+    <select id="getStaticCount" resultMap="staticCount">
+        SELECT unix_timestamp(from_unixtime(timestamp/1000,"%Y:%m:%d %H:00:00"))*1000 as time_hour, count(*) as total
+        FROM nebula_data.notice
+        <![CDATA[
+        WHERE timestamp >= #{startTime} AND timestamp <= #{endTime} AND test = #{test}
+        ]]>
+        GROUP BY from_unixtime(timestamp/1000, "%Y:%m:%d %H")
+    </select>
+    <select id="filterByExpireAndDecision" resultType="com.threathunter.web.manager.mysql.domain.SlotNotice">
+     <![CDATA[
+
+
+
+         select *
+         from nebula_data.notice
+         where `expire` >=#{expire} and `decision`=#{decision}
+
+
+
+        ]]>
+    </select>
+    <select id="filterAggregate" resultMap="slotNotice">
+        <!-- <include refid="selectaggr"/>-->
+        select
+        <include refid="selectaggr"/>
+        <include refid="fromWhere"/>
+        group by `key`, `strategy_name`
+        order by timestamp desc
+        limit #{offset},#{rowCount}
+    </select>
+    <select id="filterNonAggregate" resultType="com.threathunter.web.manager.mysql.domain.SlotNotice">
+        select
+        <include refid="selectNonaggr"/>
+        <include refid="fromWhere"/>
+        order by timestamp desc
+        limit #{offset},#{rowCount}
+    </select>
+    <select id="selectCountAtAggregate" resultType="int">
+        select count(*)
+        from (
+        select `key`,`strategy_name`
+        <include refid="fromWhere"/>
+        group by `key`, `strategy_name`) tmp;
+
+
+    </select>
+    <select id="selectCountAtNonAggregate" resultType="int">
+        select count(`key`)
+        <include refid="fromWhere"/>
+    </select>
+    <select id="selectIdByExpireAndDecision" resultType="java.lang.Long">
+         <![CDATA[
+
+
+         select `id`
+         from nebula_data.notice
+         where `expire` >=unix_timestamp(now())*1000 and `decision`= 'accept'
+
+
+        ]]>
+    </select>
+</mapper>

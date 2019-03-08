@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threathunter.web.manager.mysql.mapper.LogQueryMapper">
+    <resultMap id="logquery" type="LogQuery">
+        <result property="id" column="id"></result>
+        <result property="fromTime" column="fromtime"></result>
+        <result property="endTime" column="endtime"></result>
+        <result property="status" column="status" javaType="com.threathunter.web.manager.mysql.domain.LogQueryStatus"
+                jdbcType="VARCHAR"
+                typeHandler="com.threathunter.web.manager.mysql.handler.LogQueryStatusTypeHandler"></result>
+        <result property="remark" column="remark"></result>
+        <result property="error" column="error"></result>
+        <result property="eventName" column="event_name"></result>
+        <result property="downloadPath" column="download_path"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="terms" column="terms" javaType="java.util.List" jdbcType="VARCHAR"
+                typeHandler="com.threathunter.web.manager.mysql.handler.ListMapTypeHandler"></result>
+        <result property="showColumns" column="show_cols" javaType="java.util.List" jdbcType="VARCHAR"
+                typeHandler="com.threathunter.web.manager.mysql.handler.ListStringTypeHandler"></result>
+    </resultMap>
+    <update id="update" parameterType="LogQuery">
+        update nebula.logquery set
+          `fromtime` = #{fromTime},
+          `endtime` = #{endTime},
+          `status` = #{status},
+          `remark`= #{remark},
+          `error` = #{error},
+          `event_name`= #{eventName},
+         `download_path`=#{downloadPath},
+         `create_time`= #{createTime},
+         `terms`=#{terms},
+         `show_cols`=#{showColumns}
+         where id = #{id}
+    </update>
+    <delete id="delete">
+        delete from nebula.logquery where id=#{id}
+    </delete>
+
+    <select id="getById" resultMap="logquery">
+        select * from nebula.logquery  where id=#{id}
+    </select>
+    <insert id="insert" parameterType="LogQuery" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO nebula.logquery (`fromtime`, `endtime`, `status`,`remark`, `error`, `event_name`, `download_path`, `create_time`, `terms`, `show_cols`)
+        VALUES (#{fromTime}, #{endTime}, #{status}, #{remark}, #{error}, #{eventName}, #{downloadPath}, #{createTime}, #{terms}, #{showColumns});
+    </insert>
+
+    <select id="getAll" resultMap="logquery">
+        select * from nebula.logquery  order by create_time DESC
+    </select>
+    <select id="getAllNonSuccessIds" resultType="java.lang.Integer">
+        select id from nebula.logquery where status != 'success'
+    </select>
+    <select id="getAllSuccessIds" resultType="java.lang.Integer">
+        select id from nebula.logquery where status = 'success'
+    </select>
+</mapper>

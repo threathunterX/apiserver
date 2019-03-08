@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threathunter.web.manager.mysql.mapper.NoticeMapper">
+    <resultMap id="notice" type="Notice">
+        <result property="id" column="id"></result>
+        <result property="timestamp" column="timestamp"></result>
+        <result property="key" column="key"></result>
+        <result property="checkType" column="check_type"></result>
+        <result property="strategyName" column="strategy_name"></result>
+    </resultMap>
+
+    <select id="noticeCheck"  resultType="notice">
+        select * from notice limit 1
+    </select>
+
+</mapper>

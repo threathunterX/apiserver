@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threathunter.web.manager.mysql.mapper.StrategyCustMapper">
+    <resultMap id="strategyCust" type="com.threathunter.web.manager.mysql.domain.StrategyCust">
+        <result property="id" column="id"></result>
+        <result property="app" column="app"></result>
+        <result property="name" column="name"></result>
+        <result property="remark" column="remark"></result>
+        <result property="version" column="version"></result>
+        <result property="status" column="status"></result>
+        <result property="createtime" column="createtime"></result>
+        <result property="modifytime" column="modifytime"></result>
+        <result property="starteffect" column="starteffect"></result>
+        <result property="endeffect" column="endeffect"></result>
+        <result property="last_modified" column="last_modified"></result>
+        <result property="config" column="config"></result>
+        <result property="score" column="score"></result>
+        <result property="tags" column="tags"></result>
+        <result property="islock" column="islock"></result>
+        <result property="category" column="category"></result>
+        <result property="group_id" column="group_id"></result>
+    </resultMap>
+    <insert id="insert" parameterType="com.threathunter.web.manager.mysql.domain.StrategyCust">
+        insert into nebula.strategy_cust(`app`,`name`,`remark`,`version`,`status`,`createtime`,`modifytime`,`starteffect`,`endeffect`,`last_modified`,`config`,`score`,`tags`,`islock`,`category`,`group_id`)
+        values(#{app},#{name},#{remark},#{version},#{status},#{createtime},#{modifytime},#{starteffect},#{endeffect},#{last_modified},#{config},#{score},#{tags},#{islock},#{category},#{group_id})
+    </insert>
+    <update id="update">
+            update nebula.strategy_cust set
+            `app` = #{app},
+            `name` = #{name},
+            `remark` = #{remark},
+            `version` = #{version},
+            `status` = #{status},
+            `createtime` = #{createtime},
+            `modifytime` = #{modifytime},
+            `starteffect` = #{starteffect},
+            `endeffect` = #{endeffect},
+            `last_modified` = #{last_modified},
+            `config` = #{config},
+            `score` = #{score},
+            `tags` = #{tags},
+            `islock` = #{islock},
+            `category` = #{category},
+            `group_id` = #{group_id}
+            where id = #{id}
+        </update>
+    <delete id="delete">
+        delete from nebula.strategy_cust
+        where id=#{id}
+    </delete>
+    <select id="getAll" resultMap="strategyCust">
+        select *
+        from nebula.strategy_cust
+    </select>
+    <select id="getById" resultMap="strategyCust">
+        select *
+        from nebula.strategy_cust
+        where id=#{id}
+    </select>
+    <select id="selectName" resultType="java.lang.String">
+        select name
+        from nebula.strategy_cust
+        where `tags` in
+        <foreach collection="tags" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

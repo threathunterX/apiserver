@@ -1,0 +1,189 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is the Swagger page for Asset management.",
+        "version": "1.0.0",
+        "title": "Swagger Asset Management"
+    },
+    "host": "127.0.0.1:8080",
+    "tags": [
+        {
+            "name": "asset",
+            "description": "API for Asset management"
+        }
+    ],
+    "schemes": [
+        "http"
+    ],
+
+    
+  "paths" : {
+    "/asset-manager/trunk/clear" : {
+      "get" : {
+        "summary" : "清空已提交的Bones",
+        "produces" : [ "application/json" ],
+        "description" : "清除Bones数据，Version升级，人工清除行为",
+        "operationId" : "_asset-manager_trunk_clear",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        },
+        "tags" : [ "asset" ]
+      }
+    },
+    "/spl/verify" : {
+      "get" : {
+        "summary" : "Spl验证接口",
+        "produces" : [ "application/json" ],
+        "description" : "Spl验证接口，检测Spl的正确性",
+        "operationId" : "_spl_verify",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        },
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "message",
+          "type" : "string",
+          "required" : true
+        } ],
+        "tags" : [ "asset" ]
+      }
+    },
+    "/asset-manager/trunk/delete" : {
+      "post" : {
+        "summary" : "删除黑白名单列表",
+        "produces" : [ "application/json" ],
+        "description" : "删除黑白名单列表，人工提交行为",
+        "operationId" : "_asset-manager_trunk_delete",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        },
+        "parameters" : [ {
+          "schema" : {
+            "$ref" : "#/definitions/_asset-manager_trunk_delete"
+          },
+          "in" : "body",
+          "name" : "参数",
+          "description" : "请填写参数",
+          "required" : true
+        } ],
+        "tags" : [ "asset" ]
+      }
+    },
+    "/asset-manager/trunk/save" : {
+      "post" : {
+        "summary" : "Bones黑白名单提交",
+        "produces" : [ "application/json" ],
+        "description" : "Bones黑白名单提交，人工提交行为",
+        "operationId" : "_asset-manager_trunk_save",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        },
+        "parameters" : [ {
+          "schema" : {
+            "$ref" : "#/definitions/_asset-manager_trunk_save"
+          },
+          "in" : "body",
+          "name" : "参数",
+          "description" : "请填写参数",
+          "required" : true
+        } ],
+        "tags" : [ "asset" ]
+      }
+    },
+    "/asset-manager/trunk/list" : {
+      "get" : {
+        "summary" : "获取黑白名单及机器提交的Bones列表",
+        "produces" : [ "application/json" ],
+        "description" : "获取黑白名单及机器提交的Bones列表及Version",
+        "operationId" : "_asset-manager_trunk_list",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        },
+        "tags" : [ "asset" ]
+      }
+    },
+    "/asset-manager/trunk/report" : {
+      "post" : {
+        "summary" : "Bones上报接口",
+        "produces" : [ "application/json" ],
+        "description" : "Bones上报，机器提交行为",
+        "operationId" : "_asset-manager_trunk_report",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          }
+        },
+        "parameters" : [ {
+          "schema" : {
+            "$ref" : "#/definitions/_asset-manager_trunk_report"
+          },
+          "in" : "body",
+          "name" : "参数",
+          "description" : "请填写参数",
+          "required" : true
+        } ],
+        "tags" : [ "asset" ]
+      }
+    }
+  },
+  "definitions" : {
+    "_asset-manager_trunk_save" : {
+      "type" : "object",
+      "required" : [ "urls", "status" ],
+      "properties" : {
+        "urls" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "status" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "_asset-manager_trunk_report" : {
+      "type" : "object",
+      "required" : [ "urls", "version" ],
+      "properties" : {
+        "urls" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "version" : {
+          "type" : "integer"
+        }
+      }
+    },
+    "_asset-manager_trunk_delete" : {
+      "type" : "object",
+      "required" : [ "urls" ],
+      "properties" : {
+        "urls" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    }
+  }
+
+    ,
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    }
+}
