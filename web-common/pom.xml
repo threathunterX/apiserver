@@ -207,7 +207,7 @@
         <dependency>
             <groupId>com.threathunter.common</groupId>
             <artifactId>threathunter.common</artifactId>
-            <version>2.6.7</version>
+            <version>1.1.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>ch.qos.logback</groupId>
