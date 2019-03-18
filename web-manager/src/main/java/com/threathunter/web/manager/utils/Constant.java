@@ -1,7 +1,7 @@
 package com.threathunter.web.manager.utils;
 
 /**
- * Created by wanbaowang on 17/9/19.
+ * 
  */
 public class Constant {
 

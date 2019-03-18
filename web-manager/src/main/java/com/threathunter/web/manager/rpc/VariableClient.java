@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by wanbaowang on 17/11/16.
+ * 
  */
 @Component
 public class VariableClient {

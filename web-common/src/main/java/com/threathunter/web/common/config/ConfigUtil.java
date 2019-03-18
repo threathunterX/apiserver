@@ -3,7 +3,7 @@ package com.threathunter.web.common.config;
 import com.threathunter.config.CommonDynamicConfig;
 
 /**
- * Created by wanbaowang on 17/9/18.
+ * 
  */
 public class ConfigUtil {
     public static CommonDynamicConfig getConfig() {

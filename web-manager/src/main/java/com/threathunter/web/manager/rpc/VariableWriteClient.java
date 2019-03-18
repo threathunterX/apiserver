@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * Created by wanbaowang on 17/11/21.
+ * 
  */
 @Component
 public class VariableWriteClient {

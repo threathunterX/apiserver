@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * Created by wanbaowang on 17/11/16.
+ * 
  */
 public class TestQueryVariable {
     private String host = "172.16.10.241";

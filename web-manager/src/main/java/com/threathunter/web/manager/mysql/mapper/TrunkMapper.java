@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * Created by wanbaowang on 17/9/19.
+ * 
  */
 public interface TrunkMapper {
 

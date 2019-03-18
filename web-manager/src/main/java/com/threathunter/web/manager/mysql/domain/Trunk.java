@@ -3,7 +3,7 @@ package com.threathunter.web.manager.mysql.domain;
 import java.util.Date;
 
 /**
- * Created by wanbaowang on 17/9/19.
+ * 
  */
 public class Trunk {
 

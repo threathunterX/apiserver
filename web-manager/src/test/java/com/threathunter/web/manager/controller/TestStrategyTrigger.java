@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by wanbaowang on 17/11/30.
+ * 
  */
 public class TestStrategyTrigger {
     private static String host = "172.16.10.116";

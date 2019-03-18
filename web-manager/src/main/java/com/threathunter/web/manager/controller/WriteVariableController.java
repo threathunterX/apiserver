@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by wanbaowang on 17/11/21.
+ * 
  */
 @HttpService("/write")
 public class WriteVariableController {

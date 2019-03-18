@@ -6,7 +6,7 @@ import com.threathunter.labrador.spl.check.CheckResponse;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by wanbaowang on 17/10/30.
+ * 
  */
 @Component
 public class SplClient {

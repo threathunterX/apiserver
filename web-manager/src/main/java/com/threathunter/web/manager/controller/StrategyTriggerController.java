@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by wanbaowang on 17/11/30.
+ * 
  */
 @HttpService("/strategy")
 public class StrategyTriggerController {

@@ -7,7 +7,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 /**
- * Created by wanbaowang on 17/10/30.
+ * 
  */
 public class TestSpl {
     private String host = "172.16.10.241";

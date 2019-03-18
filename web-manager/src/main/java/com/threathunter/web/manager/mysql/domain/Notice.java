@@ -1,7 +1,7 @@
 package com.threathunter.web.manager.mysql.domain;
 
 /**
- * Created by wanbaowang on 17/11/1.
+ * 
  */
 public class Notice {
 

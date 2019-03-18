@@ -26,7 +26,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Created by wanbaowang on 17/9/18.
+ * 
  */
 @HttpService("/asset-manager/trunk")
 public class TrunkController {

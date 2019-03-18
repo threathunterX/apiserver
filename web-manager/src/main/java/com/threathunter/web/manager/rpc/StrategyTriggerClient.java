@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * Created by wanbaowang on 17/11/30.
+ * 
  */
 @Component
 public class StrategyTriggerClient {

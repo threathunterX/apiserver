@@ -8,7 +8,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
- * Created by wanbaowang on 17/10/10.
+ * 
  */
 public abstract class TestAbstractService implements ApplicationContextAware{
    @Autowired   protected RedisService redisService;
